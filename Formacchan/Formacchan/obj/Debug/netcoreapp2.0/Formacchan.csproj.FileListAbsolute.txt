@@ -9,3 +9,6 @@ C:\Users\Owner\git\formacchan\Formacchan\Formacchan\obj\Debug\netcoreapp2.0\Form
 C:\Users\Owner\git\formacchan\Formacchan\Formacchan\obj\Debug\netcoreapp2.0\Formacchan.AssemblyInfo.cs
 C:\Users\Owner\git\formacchan\Formacchan\Formacchan\obj\Debug\netcoreapp2.0\Formacchan.dll
 C:\Users\Owner\git\formacchan\Formacchan\Formacchan\obj\Debug\netcoreapp2.0\Formacchan.pdb
+C:\Users\Owner\git\formacchan\Formacchan\Formacchan\bin\Debug\netcoreapp2.0\IocLabo.dll
+C:\Users\Owner\git\formacchan\Formacchan\Formacchan\bin\Debug\netcoreapp2.0\IocLabo.pdb
+C:\Users\Owner\git\formacchan\Formacchan\Formacchan\obj\Debug\netcoreapp2.0\Formacchan.csproj.CopyComplete

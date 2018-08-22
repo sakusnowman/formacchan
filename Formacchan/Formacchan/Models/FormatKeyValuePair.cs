@@ -12,7 +12,7 @@ namespace Formacchan.Models
             this.Value = value;
         }
 
-        string Key { get; }
-        string Value { get; }
+        public string Key { get; }
+        public string Value { get; }
     }
 }

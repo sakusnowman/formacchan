@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IocLabo;
+using System;
 
 namespace Formacchan
 {
@@ -12,9 +13,11 @@ namespace Formacchan
 
         static bool StartMainProcess(string baseSentenceFilePath, string keyValuePairFilePath, string destFilePath)
         {
-            IMainProcess mainProcess = new SynchronizationMainProcess(new FormatKeyValuePairsService());
+            new Setup(keyValuePairFilePath);
+
+            IMainProcess mainProcess = Labo.Resolve<IMainProcess>();
             var baseSentence = mainProcess.LoadBaseFile(baseSentenceFilePath);
-            var formatKeyValuePairs = mainProcess.LoadFormatKeyValuePairs(keyValuePairFilePath);
+            var formatKeyValuePairs = mainProcess.LoadFormatKeyValuePairs();
             return mainProcess.SaveFormat(baseSentence, formatKeyValuePairs, destFilePath);
         }
     }

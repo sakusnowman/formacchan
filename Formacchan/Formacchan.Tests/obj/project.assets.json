@@ -1644,6 +1644,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
+          "IocLabo": "1.0.0",
           "Microsoft.NETCore.App": "2.0.0"
         },
         "compile": {
@@ -1651,6 +1652,16 @@
         },
         "runtime": {
           "bin/placeholder/Formacchan.dll": {}
+        }
+      },
+      "IocLabo/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/IocLabo.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IocLabo.dll": {}
         }
       }
     }
@@ -5646,6 +5657,11 @@
       "type": "project",
       "path": "../Formacchan/Formacchan.csproj",
       "msbuildProject": "../Formacchan/Formacchan.csproj"
+    },
+    "IocLabo/1.0.0": {
+      "type": "project",
+      "path": "../../IocLabo/IocLabo/IocLabo.csproj",
+      "msbuildProject": "../../IocLabo/IocLabo/IocLabo.csproj"
     }
   },
   "projectFileDependencyGroups": {

@@ -1,0 +1,9 @@
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\bin\Debug\netstandard2.0\IocLabo.deps.json
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\bin\Debug\netstandard2.0\IocLabo.dll
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\bin\Debug\netstandard2.0\IocLabo.pdb
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.csprojResolveAssemblyReference.cache
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.csproj.CoreCompileInputs.cache
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.AssemblyInfoInputs.cache
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.AssemblyInfo.cs
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.dll
+C:\Users\Owner\git\formacchan\IocLabo\IocLabo\obj\Debug\netstandard2.0\IocLabo.pdb

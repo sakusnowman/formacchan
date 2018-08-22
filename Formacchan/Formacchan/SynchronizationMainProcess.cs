@@ -16,12 +16,15 @@ namespace Formacchan
             this.service = service;
         }
 
-        public   string LoadBaseFile(string baseFilePath)
+        public string LoadBaseFile(string baseFilePath)
         {
-            return "";
+            var reader = new StreamReader(baseFilePath);
+            var result = reader.ReadToEnd();
+            reader.Close();
+            return result;
         }
 
-        public IEnumerable<FormatKeyValuePair> LoadFormatKeyValuePairs(string keyValuePairFilePath)
+        public IEnumerable<FormatKeyValuePair> LoadFormatKeyValuePairs()
         {
             return service.GetKeyValuePairs();
         }

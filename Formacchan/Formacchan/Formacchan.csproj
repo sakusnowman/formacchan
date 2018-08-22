@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\IocLabo\IocLabo\IocLabo.csproj" />
+  </ItemGroup>
+
 </Project>
