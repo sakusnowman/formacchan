@@ -8,10 +8,16 @@
     ".NETCoreApp,Version=v2.0": {
       "Formacchan/1.0.0": {
         "dependencies": {
+          "FormacchanLibrary": "1.0.0",
           "IocLabo": "1.0.0"
         },
         "runtime": {
           "Formacchan.dll": {}
+        }
+      },
+      "FormacchanLibrary/1.0.0": {
+        "runtime": {
+          "FormacchanLibrary.dll": {}
         }
       },
       "IocLabo/1.0.0": {
@@ -23,6 +29,11 @@
   },
   "libraries": {
     "Formacchan/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FormacchanLibrary/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

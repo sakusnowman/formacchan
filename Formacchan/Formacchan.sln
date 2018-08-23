@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Formacchan.Tests", "Formacc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IocLabo", "..\IocLabo\IocLabo\IocLabo.csproj", "{B3D08B00-EE72-47B2-ABC0-2AA325A098A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormacchanLibrary", "FormacchanLibrary\FormacchanLibrary.csproj", "{00A84A36-D9E4-45B4-B2AA-8E615ED516E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B3D08B00-EE72-47B2-ABC0-2AA325A098A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3D08B00-EE72-47B2-ABC0-2AA325A098A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3D08B00-EE72-47B2-ABC0-2AA325A098A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A84A36-D9E4-45B4-B2AA-8E615ED516E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A84A36-D9E4-45B4-B2AA-8E615ED516E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A84A36-D9E4-45B4-B2AA-8E615ED516E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A84A36-D9E4-45B4-B2AA-8E615ED516E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Formacchan.Extensions;
-using Formacchan.Models;
+using FormacchanLibrary.Models;
 using Formacchan.Repositories;
 
 namespace Formacchan.Services
@@ -16,7 +16,7 @@ namespace Formacchan.Services
             this.repository = repository;
         }
 
-        public string FormatSentence(string sentence, IEnumerable<FormatKeyValuePair> formatKeyValuePairs)
+        public string FormatSentence(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs)
         {
             var values = new List<string>();
             var result = sentence;
@@ -27,7 +27,7 @@ namespace Formacchan.Services
             return result;
         }
 
-        public IEnumerable<FormatKeyValuePair> GetKeyValuePairs()
+        public IEnumerable<IFormatKeyValuePair> GetKeyValuePairs()
         {
             return repository.GetFormatKeyValuePairs();
         }

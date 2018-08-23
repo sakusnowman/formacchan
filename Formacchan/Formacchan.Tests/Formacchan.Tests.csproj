@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Formacchan\Formacchan.csproj" />
+    <ProjectReference Include="..\FormacchanLibrary\FormacchanLibrary.csproj" />
   </ItemGroup>
 
 </Project>

@@ -19,11 +19,12 @@ namespace Formacchan
         {
             Labo.Register<IMainProcess, SynchronizationMainProcess>();
             Labo.Register<IFormatKeyValuePairsService, FormatKeyValuePairsService>();
+            Labo.Register<FormacchanLibrary.Services.IFormatKeyValuePairsService, FormacchanLibrary.Services.FormatKeyValuePairsService>();
         }
 
         private void RegisterSingleton(string keyValuePairsFilePath)
         {
-            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath);
+            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>());
             Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
         }
 
