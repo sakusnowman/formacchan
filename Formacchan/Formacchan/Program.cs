@@ -7,7 +7,7 @@ namespace Formacchan
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(StartMainProcess(args[0], args[1], args[2]));
+             Console.WriteLine(StartMainProcess(args[0], args[1], args[2]));
         }
 
         static bool StartMainProcess(string baseSentenceFilePath, string keyValuePairFilePath, string destFilePath)

@@ -28,3 +28,5 @@ C:\Users\Owner\git\aaa\formacchan\Formacchan\Formacchan\obj\Release\netcoreapp2.
 C:\Users\Owner\git\aaa\formacchan\Formacchan\Formacchan\obj\Release\netcoreapp2.0\Formacchan.csproj.CopyComplete
 C:\Users\Owner\git\aaa\formacchan\Formacchan\Formacchan\obj\Release\netcoreapp2.0\Formacchan.dll
 C:\Users\Owner\git\aaa\formacchan\Formacchan\Formacchan\obj\Release\netcoreapp2.0\Formacchan.pdb
+C:\Users\Owner\git\formacchan\Formacchan\Formacchan\bin\Release\netcoreapp2.0\FormacchanLibrary.dll
+C:\Users\Owner\git\formacchan\Formacchan\Formacchan\bin\Release\netcoreapp2.0\FormacchanLibrary.pdb

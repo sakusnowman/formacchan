@@ -118,8 +118,6 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(expectedResult3, result[3]);
         }
 
-        
-
         private SimpleSample sample;
         private HasSimpleSample hasSample;
         private HasHasSimpleSample hasHasSample;
