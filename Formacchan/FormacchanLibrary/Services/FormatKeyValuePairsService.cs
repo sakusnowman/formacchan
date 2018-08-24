@@ -26,7 +26,7 @@ namespace FormacchanLibrary.Services
                 }
                 else
                 {
-                    var classPrefix = prefix + property.PropertyType.Name + "::";
+                    var classPrefix = prefix + property.Name + "::";
                     result.AddRange(GetFormatKeyValuePairFromProperties(property.GetValue(obj), classPrefix));
                 }
             }

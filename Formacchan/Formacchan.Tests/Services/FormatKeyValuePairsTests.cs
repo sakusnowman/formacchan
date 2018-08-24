@@ -75,8 +75,8 @@ namespace Formacchan.Tests.Services
         {
             // Arrange
             var expectedResult = new FormatKeyValuePair("{Name}", "HAS1");
-            var expectedResult1 = new FormatKeyValuePair("{SimpleSample::Name}", "SAMPLE1");
-            var expectedResult2 = new FormatKeyValuePair("{SimpleSample::Amount}", "1");
+            var expectedResult1 = new FormatKeyValuePair("{SS::Name}", "SAMPLE1");
+            var expectedResult2 = new FormatKeyValuePair("{SS::Amount}", "1");
             // Act
             var result = service.GetFormatKeyValuePairFromProperties(hasSample).ToList();
             // Assert
@@ -105,9 +105,9 @@ namespace Formacchan.Tests.Services
         {
             // Arrange
             var expectedResult = new FormatKeyValuePair("{Name}", "HASHAS1");
-            var expectedResult1 = new FormatKeyValuePair("{HasSimpleSample::Name}", "HAS1");
-            var expectedResult2 = new FormatKeyValuePair("{HasSimpleSample::SimpleSample::Name}", "SAMPLE1");
-            var expectedResult3 = new FormatKeyValuePair("{HasSimpleSample::SimpleSample::Amount}", "1");
+            var expectedResult1 = new FormatKeyValuePair("{HSS::Name}", "HAS1");
+            var expectedResult2 = new FormatKeyValuePair("{HSS::SS::Name}", "SAMPLE1");
+            var expectedResult3 = new FormatKeyValuePair("{HSS::SS::Amount}", "1");
             // Act
             var result = service.GetFormatKeyValuePairFromProperties(hasHasSample).ToList();
             // Assert
