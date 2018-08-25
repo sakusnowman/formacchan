@@ -13,18 +13,18 @@ You can use string.format of c# method, and caluculate formula.
 Please look demo for more details.
 
 ## Demo
-Formatable File:
+Formatable File
 I am {NAME}. My weight is <f=|{WEIGHT}<=>{0:#.0}|=f>kg : <f=|<c=|{WEIGHT}/0.453|=c><=>{0:#.00}|=f>lb.
 
-Format Key Value File:
+Format Key Value File
 {NAME}<=>Jhon
 {WEIGHT}<=>65
 
-Result File:
+Result File
 I am Jhon. My weight is 65.0kg : 143.49lb.
 
 
-Notes:
+Notes
 <f=| is Mark to use Format. <f=|VALUE<=>FORMATTER|=>
 <c=| is Mark to calculate formula. <c=|FORMULA|=>
 ## Requirement
