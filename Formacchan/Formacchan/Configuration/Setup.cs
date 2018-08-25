@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Formacchan
+namespace Formacchan.Configuration
 {
     class Setup
     {
@@ -19,11 +19,15 @@ namespace Formacchan
         {
             Labo.Register<IMainProcess, SynchronizationMainProcess>();
             Labo.Register<IFormatKeyValuePairsService, FormatKeyValuePairsService>();
+            Labo.Register<FormacchanLibrary.Services.IFormatKeyValuePairsService, FormacchanLibrary.Services.FormatKeyValuePairsService>();
         }
 
         private void RegisterSingleton(string keyValuePairsFilePath)
         {
-            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath);
+            Labo.RegisterSingleton<IConfigurationSettings>(new ConfigurationSettingFromConfigFile());
+            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, 
+                Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>(), 
+                Labo.Resolve<IConfigurationSettings>());
             Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
         }
 

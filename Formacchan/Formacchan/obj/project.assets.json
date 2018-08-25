@@ -197,6 +197,16 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "FormacchanLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/FormacchanLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FormacchanLibrary.dll": {}
+        }
+      },
       "IocLabo/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -667,6 +677,11 @@
         "netstandard.library.nuspec"
       ]
     },
+    "FormacchanLibrary/1.0.0": {
+      "type": "project",
+      "path": "../FormacchanLibrary/FormacchanLibrary.csproj",
+      "msbuildProject": "../FormacchanLibrary/FormacchanLibrary.csproj"
+    },
     "IocLabo/1.0.0": {
       "type": "project",
       "path": "../../IocLabo/IocLabo/IocLabo.csproj",
@@ -675,6 +690,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "FormacchanLibrary >= 1.0.0",
       "IocLabo >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
@@ -712,6 +728,9 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
+            "C:\\Users\\Owner\\git\\formacchan\\Formacchan\\FormacchanLibrary\\FormacchanLibrary.csproj": {
+              "projectPath": "C:\\Users\\Owner\\git\\formacchan\\Formacchan\\FormacchanLibrary\\FormacchanLibrary.csproj"
+            },
             "C:\\Users\\Owner\\git\\formacchan\\IocLabo\\IocLabo\\IocLabo.csproj": {
               "projectPath": "C:\\Users\\Owner\\git\\formacchan\\IocLabo\\IocLabo\\IocLabo.csproj"
             }

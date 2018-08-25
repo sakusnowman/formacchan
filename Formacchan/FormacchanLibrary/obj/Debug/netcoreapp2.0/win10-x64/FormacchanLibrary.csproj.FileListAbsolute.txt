@@ -1,0 +1,8 @@
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\bin\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.deps.json
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\bin\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.dll
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\bin\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.pdb
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\obj\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\obj\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.AssemblyInfoInputs.cache
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\obj\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.AssemblyInfo.cs
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\obj\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.dll
+C:\Users\Owner\git\formacchan\formacchan\FormacchanLibrary\obj\Debug\netcoreapp2.0\win10-x64\FormacchanLibrary.pdb

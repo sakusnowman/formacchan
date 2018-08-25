@@ -1,4 +1,4 @@
-﻿using Formacchan.Models;
+﻿using FormacchanLibrary.Models;
 using Formacchan.Services;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Formacchan
     public interface IMainProcess
     {
         string LoadBaseFile(string baseSentenceFilePath);
-        IEnumerable<FormatKeyValuePair> LoadFormatKeyValuePairs();
-        bool SaveFormat(string baseSentence, IEnumerable<FormatKeyValuePair> formatKeyValuePairs, string destFilePath);
+        IEnumerable<IFormatKeyValuePair> LoadFormatKeyValuePairs();
+        bool SaveFormat(string baseSentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs, string destFilePath);
     }
 }

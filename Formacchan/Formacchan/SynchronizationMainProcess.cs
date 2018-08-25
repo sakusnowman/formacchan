@@ -1,4 +1,4 @@
-﻿using Formacchan.Models;
+﻿using FormacchanLibrary.Models;
 using Formacchan.Services;
 using System;
 using System.Collections.Generic;
@@ -24,16 +24,18 @@ namespace Formacchan
             return result;
         }
 
-        public IEnumerable<FormatKeyValuePair> LoadFormatKeyValuePairs()
+        public IEnumerable<IFormatKeyValuePair> LoadFormatKeyValuePairs()
         {
             return service.GetKeyValuePairs();
         }
 
-        public bool SaveFormat(string baseSentence, IEnumerable<FormatKeyValuePair> formatKeyValuePairs, string destFilePath)
+        public bool SaveFormat(string baseSentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs, string destFilePath)
         {
-            var sentence = service.FormatSentence(baseSentence, formatKeyValuePairs);
+            var replacedSentence = service.ReplaceKeyToValue(baseSentence, formatKeyValuePairs);
+            var calculatedSentence = service.CalculateSentence(replacedSentence);
+            var formattedSentence = service.FormatSenetence(calculatedSentence);
             var writer = new StreamWriter(destFilePath);
-            writer.Write(sentence);
+            writer.Write(formattedSentence);
             writer.Close();
             return true;
         }

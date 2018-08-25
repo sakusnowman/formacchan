@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Formacchan.Models;
+using Formacchan.Configuration;
+using FormacchanLibrary.Models;
+
 
 namespace Formacchan.Repositories
 {
     public class FormatKeyValuePairsRepository : IFormatKeyValuePairsRepository
     {
         string formatKeyValuePairsFilePath;
-        public FormatKeyValuePairsRepository(string formatKeyValuePairsFilePath)
+        private readonly FormacchanLibrary.Services.IFormatKeyValuePairsService service;
+        private readonly IConfigurationSettings configurationSettings;
+
+        public FormatKeyValuePairsRepository(string formatKeyValuePairsFilePath, 
+            FormacchanLibrary.Services.IFormatKeyValuePairsService service, 
+            IConfigurationSettings configurationSettings)
         {
             this.formatKeyValuePairsFilePath = formatKeyValuePairsFilePath;
+            this.service = service;
+            this.configurationSettings = configurationSettings;
         }
-        public IEnumerable<FormatKeyValuePair> GetFormatKeyValuePairs()
+        public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs()
         {
             var reader = new StreamReader(formatKeyValuePairsFilePath);
-            var result = new List<FormatKeyValuePair>();
-            while(reader.EndOfStream == false)
-            {
-                var line = reader.ReadLine();
-                var split = line.Split("<=>");
-                result.Add(new FormatKeyValuePair(split[0], split[1]));
-            }
-            reader.Close();
-            return result;
+            return service.GetFormatKeyValuePairs(reader.ReadToEnd(), configurationSettings.KeyValueSplitMark);
         }
     }
 }

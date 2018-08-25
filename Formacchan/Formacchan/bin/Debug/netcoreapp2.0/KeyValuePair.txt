@@ -1,2 +1,5 @@
-WIDTH<=>22
-HEIGHT<=>55
+{WIDTH}<=>33
+{NAME}<=>Jhon
+{WEIGHT}<=>65
+{HEIGHT}<=>120
+#{DEPTH}<=>550 this line skip.
