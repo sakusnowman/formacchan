@@ -8,6 +8,8 @@ namespace Formacchan.Services
     public interface IFormatKeyValuePairsService
     {
         IEnumerable<IFormatKeyValuePair> GetKeyValuePairs();
-        string FormatSentence(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs);
+        string ReplaceKeyToValue(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs);
+        string FormatSenetence(string sentence);
+        string CalculateSentence(string sentence);
     }
 }

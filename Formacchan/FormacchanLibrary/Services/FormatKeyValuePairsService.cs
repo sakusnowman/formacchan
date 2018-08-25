@@ -30,7 +30,6 @@ namespace FormacchanLibrary.Services
                     result.AddRange(GetFormatKeyValuePairFromProperties(property.GetValue(obj), classPrefix));
                 }
             }
-
             return result;
         }
 
@@ -42,8 +41,11 @@ namespace FormacchanLibrary.Services
             var line = reader.ReadLine();
             while (line != null)
             {
-                var split = line.Split("<=>");
-                result.Add(new FormatKeyValuePair(split[0], split[1]));
+                if (line.StartsWith('#') == false)
+                {
+                    var split = line.Split("<=>");
+                    result.Add(new FormatKeyValuePair(split[0], split[1]));
+                }
                 line = reader.ReadLine();
             }
             reader.Close();

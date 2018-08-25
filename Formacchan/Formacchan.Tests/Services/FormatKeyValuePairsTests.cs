@@ -118,6 +118,13 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(expectedResult3, result[3]);
         }
 
+        [TestCase("{0:00000}", "10", ExpectedResult = "00010")]
+        [TestCase("{0:P}", "0.5566", ExpectedResult = "55.66%")]
+        public string SampleTest(string format, string value)
+        {
+            return string.Format(format, Double.Parse(value));
+        }
+
         private SimpleSample sample;
         private HasSimpleSample hasSample;
         private HasHasSimpleSample hasHasSample;

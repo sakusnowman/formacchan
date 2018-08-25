@@ -16,11 +16,11 @@ namespace Formacchan.Services
             this.repository = repository;
         }
 
-        public string FormatSentence(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs)
+        public string ReplaceKeyToValue(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs)
         {
             var values = new List<string>();
             var result = sentence;
-            foreach(var keyValuePair in formatKeyValuePairs)
+            foreach (var keyValuePair in formatKeyValuePairs)
             {
                 result = result.Replace(keyValuePair.Key, keyValuePair.Value);
             }
@@ -30,6 +30,21 @@ namespace Formacchan.Services
         public IEnumerable<IFormatKeyValuePair> GetKeyValuePairs()
         {
             return repository.GetFormatKeyValuePairs();
+        }
+
+        public string FormatSenetence(string sentence)
+        {
+            var startMark = "<f=|";
+            var splitMark = "<=>";
+            var endMark = "|=f>";
+            return sentence.FormatInnerSenetences(startMark, endMark, splitMark);
+        }
+
+        public string CalculateSentence(string sentence)
+        {
+            var startMark = "<c=|";
+            var endMark = "|=c>";
+            return sentence.CalculateInnerSentences(startMark, endMark);
         }
     }
 }

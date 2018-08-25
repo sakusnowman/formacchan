@@ -1,0 +1,12 @@
+W{WIDTH}cm X H{HEIGHT}cm
+{HEIGHT} m X {WIDTH} m
+{DEPTH} m X {WIDTH} m X {HEIGHT} m
+
+<=|{HEIGHT}<=>{0:#.00}|=><=|{HEIGHT}<=>{0:#.00}|=>
+<=|{HEIGHT}<=>{0:#.00}|=>
+
+this width is <=|{WIDTH}<=>{0:#,0.00}|=>
+
+<=|1234567<=>{0:#,0.0}|=>
+<=|12.34567<=>{0:#.000}|=>
+

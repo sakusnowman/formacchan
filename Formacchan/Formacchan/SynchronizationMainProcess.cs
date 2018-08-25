@@ -31,9 +31,11 @@ namespace Formacchan
 
         public bool SaveFormat(string baseSentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs, string destFilePath)
         {
-            var sentence = service.FormatSentence(baseSentence, formatKeyValuePairs);
+            var replacedSentence = service.ReplaceKeyToValue(baseSentence, formatKeyValuePairs);
+            var calculatedSentence = service.CalculateSentence(replacedSentence);
+            var formattedSentence = service.FormatSenetence(calculatedSentence);
             var writer = new StreamWriter(destFilePath);
-            writer.Write(sentence);
+            writer.Write(formattedSentence);
             writer.Close();
             return true;
         }
