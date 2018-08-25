@@ -93,7 +93,7 @@ namespace Formacchan.Tests.Services
             var expectedResult = new FormatKeyValuePair("{Name}", "HAS1");
             var expectedResult1 = new FormatKeyValuePair("{SS}", "SAMPLE1:1");
             // Act
-            var result = service.GetFormatKeyValuePairFromProperties(hasSample, getPropertiesInNoValueTypeProperty: false).ToList();
+            var result = service.GetFormatKeyValuePairFromProperties(hasSample, getChildlenProperties: false).ToList();
             // Assert
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(expectedResult, result[0]);
@@ -118,11 +118,18 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(expectedResult3, result[3]);
         }
 
-        [TestCase("{0:00000}", "10", ExpectedResult = "00010")]
-        [TestCase("{0:P}", "0.5566", ExpectedResult = "55.66%")]
-        public string SampleTest(string format, string value)
+        [Test]
+        public void GetFormatKeyValuePairFromProperties_HasHasSimple_NotGetChildeProperties_GetParentProperties()
         {
-            return string.Format(format, Double.Parse(value));
+            // Arrange
+            var expectedResult = new FormatKeyValuePair("{Name}", "HASHAS1");
+            var expectedResult1 = new FormatKeyValuePair("{HSS}", hasSample.ToString());
+            // Act
+            var result = service.GetFormatKeyValuePairFromProperties(hasHasSample, getChildlenProperties: false).ToList();
+            // Assert
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(expectedResult, result[0]);
+            Assert.AreEqual(expectedResult1, result[1]);
         }
 
         private SimpleSample sample;
@@ -143,6 +150,10 @@ namespace Formacchan.Tests.Services
         {
             public string Name { get; set; }
             public SimpleSample SS { get; set; }
+            public override string ToString()
+            {
+                return Name + ":" + SS.ToString();
+            }
         }
 
         class HasHasSimpleSample

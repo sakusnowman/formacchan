@@ -10,7 +10,7 @@ namespace FormacchanLibrary.Services
 {
     public class FormatKeyValuePairsService : IFormatKeyValuePairsService
     {
-        public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairFromProperties(object obj, string prefix = "", bool getPropertiesInNoValueTypeProperty = true)
+        public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairFromProperties(object obj, string prefix = "", bool getChildlenProperties = true, string splitMark = "<=>")
         {
             CheckNull(obj, prefix);
 
@@ -19,9 +19,9 @@ namespace FormacchanLibrary.Services
 
             foreach (var property in properties)
             {
-                if (getPropertiesInNoValueTypeProperty == false || IsValueTypeOrString(property))
+                if (getChildlenProperties == false || IsValueTypeOrString(property))
                 {
-                    var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj));
+                    var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj), splitMark);
                     result.Add(pairs);
                 }
                 else
@@ -33,7 +33,7 @@ namespace FormacchanLibrary.Services
             return result;
         }
 
-        public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence)
+        public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence, string splitMark)
         {
             var reader = new StringReader(pairsSentence);
             var result = new List<FormatKeyValuePair>();
@@ -43,8 +43,8 @@ namespace FormacchanLibrary.Services
             {
                 if (line.StartsWith('#') == false)
                 {
-                    var split = line.Split("<=>");
-                    result.Add(new FormatKeyValuePair(split[0], split[1]));
+                    var split = line.Split(splitMark);
+                    result.Add(new FormatKeyValuePair(split[0], split[1], splitMark));
                 }
                 line = reader.ReadLine();
             }

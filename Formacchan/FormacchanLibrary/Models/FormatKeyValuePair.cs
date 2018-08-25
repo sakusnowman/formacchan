@@ -6,10 +6,11 @@ namespace FormacchanLibrary.Models
 {
     public class FormatKeyValuePair  : IFormatKeyValuePair
     {
-        public FormatKeyValuePair(string key, string value)
+        public FormatKeyValuePair(string key, string value, string splitMark = "<=>")
         {
             this.Key = key;
             this.Value = value;
+            this.splitMark = splitMark;
         }
 
         public string Key { get; }
@@ -17,7 +18,7 @@ namespace FormacchanLibrary.Models
 
         public string GetKeyValueForFormat()
         {
-            return string.Format("{{0}}<=>{1}", Key, Value);
+            return string.Format("{{0}}{1}{2}", Key, splitMark , Value);
         }
 
         public override bool Equals(object obj)
@@ -35,5 +36,7 @@ namespace FormacchanLibrary.Models
         {
             return string.Format("Key:{0}\nValue:{1}", Key, Value);
         }
+
+        private readonly string splitMark;
     }
 }

@@ -28,4 +28,7 @@ this width is <f=|{WIDTH}<=>{0:#,0.00}|=f>
 <f=|abc<=>{0:#0.0}|=f>
 <c=|sin(50)|=c>
 
+
+##Just chek
 I am {NAME}. My weight is <f=|{WEIGHT}<=>{0:#.0}|=f>kg : <f=|<c=|{WEIGHT}/0.453|=c><=>{0:#.00}|=f>lb.
+<f=|3412345678<=>{0:00 0000 0000}|=f>

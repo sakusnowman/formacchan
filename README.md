@@ -34,6 +34,9 @@ If you want use current version, download from my repository.
 ## Usage
 dotnet formacchan.dll "formatable file path" "Key Value pair file path" "result file path"
 
+You can use FormacchanLibrary.csporj to make KeyValuePairs from other project.
+This library easy to make KeyValuePairs from properties from any class.
+
 
 ## Licence
 

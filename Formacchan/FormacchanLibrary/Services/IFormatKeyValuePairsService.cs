@@ -7,7 +7,7 @@ namespace FormacchanLibrary.Services
 {
     public interface IFormatKeyValuePairsService
     {
-        IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence);
-        IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairFromProperties(object obj, string prefix = "", bool getPropertiesInNoValueTypeProperty = true);
+        IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence, string splitMark = "<=>");
+        IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairFromProperties(object obj, string prefix = "", bool getChildlenProperties = true, string splitMark = "<=>");
     }
 }

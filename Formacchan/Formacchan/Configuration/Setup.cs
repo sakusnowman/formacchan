@@ -24,9 +24,11 @@ namespace Formacchan.Configuration
 
         private void RegisterSingleton(string keyValuePairsFilePath)
         {
-            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>());
-            Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
             Labo.RegisterSingleton<IConfigurationSettings>(new ConfigurationSettingFromConfigFile());
+            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, 
+                Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>(), 
+                Labo.Resolve<IConfigurationSettings>());
+            Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
         }
 
         
