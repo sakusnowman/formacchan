@@ -4,16 +4,20 @@ using System.Text;
 using Formacchan.Extensions;
 using FormacchanLibrary.Models;
 using Formacchan.Repositories;
+using Formacchan.Configuration;
 
 namespace Formacchan.Services
 {
     public class FormatKeyValuePairsService : IFormatKeyValuePairsService
     {
         IFormatKeyValuePairsRepository repository;
+        private readonly IConfigurationSettings configurationSettings;
 
-        public FormatKeyValuePairsService(IFormatKeyValuePairsRepository repository)
+        public FormatKeyValuePairsService(IFormatKeyValuePairsRepository repository,
+            IConfigurationSettings configurationSettings)
         {
             this.repository = repository;
+            this.configurationSettings = configurationSettings;
         }
 
         public string ReplaceKeyToValue(string sentence, IEnumerable<IFormatKeyValuePair> formatKeyValuePairs)
@@ -34,17 +38,17 @@ namespace Formacchan.Services
 
         public string FormatSenetence(string sentence)
         {
-            var startMark = "<f=|";
-            var splitMark = "<=>";
-            var endMark = "|=f>";
-            return sentence.FormatInnerSenetences(startMark, endMark, splitMark);
+            return sentence.FormatInnerSenetences(
+                configurationSettings.FormatStartMark,
+                configurationSettings.FormatEndMark,
+                configurationSettings.FormatSplitMark);
         }
 
         public string CalculateSentence(string sentence)
         {
-            var startMark = "<c=|";
-            var endMark = "|=c>";
-            return sentence.CalculateInnerSentences(startMark, endMark);
+            return sentence.CalculateInnerSentences(
+                configurationSettings.CalculationStartMark,
+                configurationSettings.CalculationEndMark);
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Formacchan
+namespace Formacchan.Configuration
 {
     class Setup
     {
@@ -26,6 +26,7 @@ namespace Formacchan
         {
             var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>());
             Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
+            Labo.RegisterSingleton<IConfigurationSettings>(new ConfigurationSettingFromConfigFile());
         }
 
         

@@ -1,15 +1,29 @@
+###Replace Key to Value
 W520cm X H120cm
 120 m X 520 m
 {DEPTH} m X 520 m X 120 m
 
-120.00120.00
-120.00
 
-this width is 520.00
-
+###String.Format <f=|VALUE<=>FORMATTER|=f>
 1,234,567.0
 12.346
 
+###String.Format after replace key to value;
+120.00120.00
+120.00
+this width is 520.00
 
+
+
+###Caluculate <c=|FORMULA|=c>
 3
+35
+
+
+###String.Format after calculate.
 62,400.0
+
+
+##Cannot Format
+<f=|abc<=>{0:#0.0}|=f>
+<c=|sin(50)|=c>

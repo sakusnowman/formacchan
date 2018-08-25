@@ -29,10 +29,10 @@ namespace Formacchan.Extensions
             foreach (var innerSentence in innerSentences)
             {
                 var split = innerSentence.Split(splitMark);
-                var formatted = "";
+                if (split.Length != 2) continue;
                 if (double.TryParse(split[0], out double value))
                 {
-                    formatted = String.Format(split[1], value);
+                    var formatted = String.Format(split[1], value);
                     result = result.Replace(startMark + innerSentence + endMark, formatted);
                 }
             }
