@@ -26,7 +26,6 @@ namespace Formacchan
                 Console.WriteLine(e.ToString());
                 return false;
             }
-
         }
     }
 }
