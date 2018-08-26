@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -20,7 +21,12 @@ namespace FormacchanLibrary.Services
 
             foreach (var property in properties)
             {
-                if (getChildlenProperties == false || IsValueTypeOrString(property))
+                if(IsEnumerable(property))
+                {
+                    var aa = property.GetValue(obj);
+                    SetIEnumerableProperty(obj, property, result, prefix, getChildlenProperties, splitMark);
+                }
+                else if (getChildlenProperties == false || IsValueTypeOrString(property))
                 {
                     var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj), splitMark);
                     result.Add(pairs);
@@ -79,6 +85,11 @@ namespace FormacchanLibrary.Services
             return property.PropertyType.Equals(typeof(string)) || property.PropertyType.IsValueType;
         }
 
+        bool IsValueTypeOrString(object obj)
+        {
+            return obj.GetType().Equals(typeof(string)) || obj.GetType().IsValueType;
+        }
+
         string GetKey(PropertyInfo property, string prefix)
         {
             return string.Format("{{{0}{1}}}", prefix, property.Name);
@@ -90,6 +101,37 @@ namespace FormacchanLibrary.Services
             return valueTemp == null ? string.Empty : valueTemp.ToString();
         }
 
+        void SetIEnumerableProperty(object obj, PropertyInfo arrayProperty,  List<IFormatKeyValuePair> result, string prefix, bool getChildlenProperties, string splitMark)
+        {
+            int count = 0;
+            var properties = arrayProperty.GetValue(obj) as Array;
+            foreach (var property in properties)
+            {
+                if (getChildlenProperties == false || IsValueTypeOrString(property))
+                {
+                    var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), property.ToString(), splitMark);
+                    result.Add(pairs);
+                }
+                else
+                {
+                    var classPrefix = prefix + arrayProperty.Name + string.Format("[{0}]", count++) + "::";
+                    result.AddRange(GetFormatKeyValuePairFromProperties(property, classPrefix));
+                }
+            }
+        }
         
+
+        bool IsEnumerable(PropertyInfo propertyInfo)
+        {
+            var type = propertyInfo.PropertyType;
+            try
+            {
+                return type.IsArray || type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
