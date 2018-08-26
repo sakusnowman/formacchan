@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Xml.Linq;
 using FormacchanLibrary.Models;
 
 namespace FormacchanLibrary.Services
@@ -33,6 +34,21 @@ namespace FormacchanLibrary.Services
             return result;
         }
 
+        public IEnumerable<XElement> GetXmlFormatKeyValuePairFromProperties(object obj, bool getChildlenProperties = true)
+        {
+            var keyValuePairs = GetFormatKeyValuePairFromProperties(obj, getChildlenProperties: getChildlenProperties);
+            var result = new List<XElement>();
+            foreach(var pair in keyValuePairs)
+            {
+                var element = new XElement("pair",
+                    new XAttribute("key", pair.Key), 
+                    new XAttribute("value", pair.Value));
+                result.Add(element);
+            }
+            return result;
+        }
+
+
         public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence, string splitMark)
         {
             var reader = new StringReader(pairsSentence);
@@ -51,7 +67,7 @@ namespace FormacchanLibrary.Services
             reader.Close();
             return result;
         }
-
+        
         void CheckNull(object obj, string prefix)
         {
             if (obj == null) throw new NullReferenceException("Failed to GetFormatKeyValuePairFromProperties, cause obj is null.");
@@ -74,6 +90,6 @@ namespace FormacchanLibrary.Services
             return valueTemp == null ? string.Empty : valueTemp.ToString();
         }
 
-
+        
     }
 }

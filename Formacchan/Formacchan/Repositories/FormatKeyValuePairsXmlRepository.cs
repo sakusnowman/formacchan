@@ -25,7 +25,7 @@ namespace Formacchan.Repositories
         {
             keyValuePairs = new List<IFormatKeyValuePair>();
             var document = XDocument.Load(formatKeyValuePairsFilePath);
-            var root = document.Element("root");
+            var root = document.Root;
             var pairs = root.Elements("pair");
             foreach(var pair in pairs)
             {
