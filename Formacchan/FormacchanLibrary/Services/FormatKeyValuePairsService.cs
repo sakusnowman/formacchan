@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Xml.Linq;
 using FormacchanLibrary.Models;
 
 namespace FormacchanLibrary.Services
@@ -19,7 +21,12 @@ namespace FormacchanLibrary.Services
 
             foreach (var property in properties)
             {
-                if (getChildlenProperties == false || IsValueTypeOrString(property))
+                if(IsEnumerable(property))
+                {
+                    var aa = property.GetValue(obj);
+                    SetIEnumerableProperty(obj, property, result, prefix, getChildlenProperties, splitMark);
+                }
+                else if (getChildlenProperties == false || IsValueTypeOrString(property))
                 {
                     var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj), splitMark);
                     result.Add(pairs);
@@ -32,6 +39,21 @@ namespace FormacchanLibrary.Services
             }
             return result;
         }
+
+        public IEnumerable<XElement> GetXmlFormatKeyValuePairFromProperties(object obj, bool getChildlenProperties = true)
+        {
+            var keyValuePairs = GetFormatKeyValuePairFromProperties(obj, getChildlenProperties: getChildlenProperties);
+            var result = new List<XElement>();
+            foreach(var pair in keyValuePairs)
+            {
+                var element = new XElement("pair",
+                    new XAttribute("key", pair.Key), 
+                    new XAttribute("value", pair.Value));
+                result.Add(element);
+            }
+            return result;
+        }
+
 
         public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence, string splitMark)
         {
@@ -51,7 +73,7 @@ namespace FormacchanLibrary.Services
             reader.Close();
             return result;
         }
-
+        
         void CheckNull(object obj, string prefix)
         {
             if (obj == null) throw new NullReferenceException("Failed to GetFormatKeyValuePairFromProperties, cause obj is null.");
@@ -61,6 +83,11 @@ namespace FormacchanLibrary.Services
         bool IsValueTypeOrString(PropertyInfo property)
         {
             return property.PropertyType.Equals(typeof(string)) || property.PropertyType.IsValueType;
+        }
+
+        bool IsValueTypeOrString(object obj)
+        {
+            return obj.GetType().Equals(typeof(string)) || obj.GetType().IsValueType;
         }
 
         string GetKey(PropertyInfo property, string prefix)
@@ -74,6 +101,37 @@ namespace FormacchanLibrary.Services
             return valueTemp == null ? string.Empty : valueTemp.ToString();
         }
 
+        void SetIEnumerableProperty(object obj, PropertyInfo arrayProperty,  List<IFormatKeyValuePair> result, string prefix, bool getChildlenProperties, string splitMark)
+        {
+            int count = 0;
+            var properties = arrayProperty.GetValue(obj) as Array;
+            foreach (var property in properties)
+            {
+                if (getChildlenProperties == false || IsValueTypeOrString(property))
+                {
+                    var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), property.ToString(), splitMark);
+                    result.Add(pairs);
+                }
+                else
+                {
+                    var classPrefix = prefix + arrayProperty.Name + string.Format("[{0}]", count++) + "::";
+                    result.AddRange(GetFormatKeyValuePairFromProperties(property, classPrefix));
+                }
+            }
+        }
+        
 
+        bool IsEnumerable(PropertyInfo propertyInfo)
+        {
+            var type = propertyInfo.PropertyType;
+            try
+            {
+                return type.IsArray || type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

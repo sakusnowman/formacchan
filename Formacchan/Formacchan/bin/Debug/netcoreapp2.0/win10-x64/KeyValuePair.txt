@@ -1,3 +1,0 @@
-{WIDTH}<=>520
-{HEIGHT}<=>120
-#{DEPTH}<=>550 this line skip.
