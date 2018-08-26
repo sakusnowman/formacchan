@@ -6,6 +6,7 @@ namespace Formacchan.Configuration
 {
     public interface IConfigurationSettings
     {
+        bool IsXmlMode { get; }
         string KeyValueSplitMark { get; }
         string FormatStartMark { get; }
         string FormatEndMark { get; }
