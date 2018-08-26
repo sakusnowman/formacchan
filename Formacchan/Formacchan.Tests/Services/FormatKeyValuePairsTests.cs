@@ -182,6 +182,30 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(expectedResult1.Value, result[1].Attribute("value").Value);
         }
 
+        [Test]
+        public void GetFormatKeyValuePairFromProperties_ArraySample_GetAllValueInArray()
+        {
+            // Arrange
+            var arraySample = new ArraySample() { Name = "ARRAY" };
+            var expectedResult = new List<IFormatKeyValuePair>()
+            {
+                new FormatKeyValuePair("{Name}", "ARRAY"),
+                new FormatKeyValuePair("{Odd[0]}", "2"),
+                new FormatKeyValuePair("{Odd[1]}", "4"),
+                new FormatKeyValuePair("{Odd[2]}", "6"),
+                new FormatKeyValuePair("{Odd[3]}", "8"),
+                new FormatKeyValuePair("{Add[0]}", "1"),
+                new FormatKeyValuePair("{Add[1]}", "3"),
+                new FormatKeyValuePair("{Add[2]}", "5"),
+                new FormatKeyValuePair("{Add[3]}", "7"),
+                new FormatKeyValuePair("{Add[4]}", "9"),
+            };
+            // Act
+            var result = service.GetFormatKeyValuePairFromProperties(arraySample);
+            // Assert
+            Assert.AreEqual(result, expectedResult);
+        }
+
         private SimpleSample sample;
         private HasSimpleSample hasSample;
         private HasHasSimpleSample hasHasSample;
@@ -210,6 +234,13 @@ namespace Formacchan.Tests.Services
         {
             public string Name { get; set; }
             public HasSimpleSample HSS { get; set; }
+        }
+
+        class ArraySample
+        {
+            public string Name { get; set; }
+            public int[] Odd { get => new int[] { 2, 4, 6, 8 }; }
+            public IEnumerable<int> Add { get => new int[] { 1, 3, 5, 7, 9 }; }
         }
 
     }
