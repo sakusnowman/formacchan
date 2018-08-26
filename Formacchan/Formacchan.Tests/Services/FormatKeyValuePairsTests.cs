@@ -132,6 +132,56 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(expectedResult1, result[1]);
         }
 
+        [Test]
+        public void GetXmlFormatKeyValuePairFromProperties_Sample()
+        {
+            // Act
+            var result = service.GetXmlFormatKeyValuePairFromProperties(sample).ToList();
+            // Assert
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("{Name}", result[0].Attribute("key").Value);
+            Assert.AreEqual("SAMPLE1", result[0].Attribute("value").Value);
+            Assert.AreEqual("{Amount}", result[1].Attribute("key").Value);
+            Assert.AreEqual("1", result[1].Attribute("value").Value);
+        }
+
+        [Test]
+        public void GetXmlFormatKeyValuePairFromProperties_HasHasSimpleSample_GetWithHasSimpleSampleProperties()
+        {
+            // Arrange
+            var expectedResult = new FormatKeyValuePair("{Name}", "HASHAS1");
+            var expectedResult1 = new FormatKeyValuePair("{HSS::Name}", "HAS1");
+            var expectedResult2 = new FormatKeyValuePair("{HSS::SS::Name}", "SAMPLE1");
+            var expectedResult3 = new FormatKeyValuePair("{HSS::SS::Amount}", "1");
+            // Act
+            var result = service.GetXmlFormatKeyValuePairFromProperties(hasHasSample).ToList();
+            // Assert
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(expectedResult.Key, result[0].Attribute("key").Value);
+            Assert.AreEqual(expectedResult.Value, result[0].Attribute("value").Value);
+            Assert.AreEqual(expectedResult1.Key, result[1].Attribute("key").Value);
+            Assert.AreEqual(expectedResult1.Value, result[1].Attribute("value").Value);
+            Assert.AreEqual(expectedResult2.Key, result[2].Attribute("key").Value);
+            Assert.AreEqual(expectedResult2.Value, result[2].Attribute("value").Value);
+            Assert.AreEqual(expectedResult3.Key, result[3].Attribute("key").Value);
+            Assert.AreEqual(expectedResult3.Value, result[3].Attribute("value").Value);
+        }
+
+        [Test]
+        public void GetXmlFormatKeyValuePairFromProperties_HasHasSimple_NotGetChildeProperties_GetParentProperties()
+        {
+            // Arrange
+            var expectedResult = new FormatKeyValuePair("{Name}", "HASHAS1");
+            var expectedResult1 = new FormatKeyValuePair("{HSS}", hasSample.ToString());
+            // Act
+            var result = service.GetXmlFormatKeyValuePairFromProperties(hasHasSample, getChildlenProperties: false).ToList();
+            // Assert
+            Assert.AreEqual(expectedResult.Key, result[0].Attribute("key").Value);
+            Assert.AreEqual(expectedResult.Value, result[0].Attribute("value").Value);
+            Assert.AreEqual(expectedResult1.Key, result[1].Attribute("key").Value);
+            Assert.AreEqual(expectedResult1.Value, result[1].Attribute("value").Value);
+        }
+
         private SimpleSample sample;
         private HasSimpleSample hasSample;
         private HasHasSimpleSample hasHasSample;
