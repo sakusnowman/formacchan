@@ -25,12 +25,25 @@ namespace Formacchan.Configuration
         private void RegisterSingleton(string keyValuePairsFilePath)
         {
             Labo.RegisterSingleton<IConfigurationSettings>(new ConfigurationSettingFromConfigFile());
-            var repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath, 
-                Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>(), 
-                Labo.Resolve<IConfigurationSettings>());
-            Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
+
+            SetRepository(keyValuePairsFilePath);
         }
 
-        
+        void SetRepository(string keyValuePairsFilePath)
+        {
+            var configurtion = Labo.Resolve<IConfigurationSettings>();
+            IFormatKeyValuePairsRepository repository = null;
+            if (configurtion.IsXmlMode)
+            {
+                repository = new FormatKeyValuePairsXmlRepository(keyValuePairsFilePath);
+            }
+            else
+            {
+                repository = new FormatKeyValuePairsRepository(keyValuePairsFilePath,
+                Labo.Resolve<FormacchanLibrary.Services.IFormatKeyValuePairsService>(), configurtion);
+            }
+
+            Labo.RegisterSingleton<IFormatKeyValuePairsRepository>(repository);
+        }
     }
 }

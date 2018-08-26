@@ -2,7 +2,7 @@
   "profiles": {
     "Formacchan": {
       "commandName": "Project",
-      "commandLineArgs": "Base.txt KeyValuePair.txt result.txt"
+      "commandLineArgs": "Base.txt KeyValuePair.xml resultXML.txt"
     }
   }
 }

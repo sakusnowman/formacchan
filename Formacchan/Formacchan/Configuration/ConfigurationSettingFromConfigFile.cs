@@ -25,6 +25,8 @@ namespace Formacchan.Configuration
         public string CalculationStartMark => GetValueFromKey("CalculationStartMark");
         public string CalculationEndMark => GetValueFromKey("CalculationEndMark");
 
+        public bool IsXmlMode => GetValueFromKey("isXmlMode").ToLower() == "true";
+
         string GetValueFromKey(string key)
         {
             var element = settings.First(e => e.Attribute("key").Value.Equals(key));
