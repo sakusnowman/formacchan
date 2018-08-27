@@ -206,6 +206,34 @@ namespace Formacchan.Tests.Services
             Assert.AreEqual(result, expectedResult);
         }
 
+        [Test]
+        public void GetFormatKeyValuePairFromProperites_ArraySampleHasSimple_GetAllPropertiesInSimpleSamples()
+        {
+            // Arrange
+            var samples = new List<SimpleSample>()
+            {
+                new SimpleSample(){Name = "Sample1", Amount = 1},
+                new SimpleSample(){Name = "Sample5", Amount = 5},
+                new SimpleSample(){Name = "Sample10", Amount = 10}
+            };
+            var hasSimpleArraySample = new HasSimpleArraySmaple() { Name = "ARRAY2", Samples = samples };
+
+            var expectedResult = new List<IFormatKeyValuePair>()
+            {
+                new FormatKeyValuePair("{Name}", "ARRAY2"),
+                new FormatKeyValuePair("{Samples[0]::Name}", "Sample1"),
+                new FormatKeyValuePair("{Samples[0]::Amount}", "1"),
+                new FormatKeyValuePair("{Samples[1]::Name}", "Sample5"),
+                new FormatKeyValuePair("{Samples[1]::Amount}", "5"),
+                new FormatKeyValuePair("{Samples[2]::Name}", "Sample10"),
+                new FormatKeyValuePair("{Samples[2]::Amount}", "10")
+            };
+            // Act
+            var result = service.GetFormatKeyValuePairFromProperties(hasSimpleArraySample);
+            // Assert
+            Assert.AreEqual(result, expectedResult);
+        }
+
         private SimpleSample sample;
         private HasSimpleSample hasSample;
         private HasHasSimpleSample hasHasSample;
@@ -240,8 +268,13 @@ namespace Formacchan.Tests.Services
         {
             public string Name { get; set; }
             public int[] Odd { get => new int[] { 2, 4, 6, 8 }; }
-            public IEnumerable<int> Add { get => new int[] { 1, 3, 5, 7, 9 }; }
+            public ICollection<int> Add { get => new int[] { 1, 3, 5, 7, 9 }; }
         }
 
+        class HasSimpleArraySmaple
+        {
+            public string Name { get; set; }
+            public IEnumerable<SimpleSample> Samples { get; set; }
+        }
     }
 }
