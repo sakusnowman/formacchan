@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using FormacchanLibrary.Models;
+using Extensions;
 
 namespace FormacchanLibrary.Services
 {
@@ -21,7 +22,7 @@ namespace FormacchanLibrary.Services
 
             foreach (var property in properties)
             {
-                if(IsEnumerable(property))
+                if (IsEnumerable(property))
                 {
                     var aa = property.GetValue(obj);
                     SetIEnumerableProperty(obj, property, result, prefix, getChildlenProperties, splitMark);
@@ -44,10 +45,10 @@ namespace FormacchanLibrary.Services
         {
             var keyValuePairs = GetFormatKeyValuePairFromProperties(obj, getChildlenProperties: getChildlenProperties);
             var result = new List<XElement>();
-            foreach(var pair in keyValuePairs)
+            foreach (var pair in keyValuePairs)
             {
                 var element = new XElement("pair",
-                    new XAttribute("key", pair.Key), 
+                    new XAttribute("key", pair.Key),
                     new XAttribute("value", pair.Value));
                 result.Add(element);
             }
@@ -73,7 +74,7 @@ namespace FormacchanLibrary.Services
             reader.Close();
             return result;
         }
-        
+
         void CheckNull(object obj, string prefix)
         {
             if (obj == null) throw new NullReferenceException("Failed to GetFormatKeyValuePairFromProperties, cause obj is null.");
@@ -101,10 +102,25 @@ namespace FormacchanLibrary.Services
             return valueTemp == null ? string.Empty : valueTemp.ToString();
         }
 
-        void SetIEnumerableProperty(object obj, PropertyInfo arrayProperty,  List<IFormatKeyValuePair> result, string prefix, bool getChildlenProperties, string splitMark)
+        void SetIEnumerableProperty(object obj, PropertyInfo arrayProperty, List<IFormatKeyValuePair> result, string prefix, bool getChildlenProperties, string splitMark)
         {
             int count = 0;
-            var properties = arrayProperty.GetValue(obj) as Array;
+            ICollection properties = (ICollection)arrayProperty.GetValue(obj);
+            //var property = arrayProperty.GetValue(obj, new object[] { count++ });
+            //while (property != null)
+            //{
+            //    if (getChildlenProperties == false || IsValueTypeOrString(property))
+            //    {
+            //        var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), property.ToString(), splitMark);
+            //        result.Add(pairs);
+            //    }
+            //    else
+            //    {
+            //        var classPrefix = prefix + arrayProperty.Name + string.Format("[{0}]", count++) + "::";
+            //        result.AddRange(GetFormatKeyValuePairFromProperties(property, classPrefix));
+            //    }
+            //    property = arrayProperty.GetValue(obj, new object[] { count++ });
+            //}
             foreach (var property in properties)
             {
                 if (getChildlenProperties == false || IsValueTypeOrString(property))
@@ -119,14 +135,32 @@ namespace FormacchanLibrary.Services
                 }
             }
         }
-        
+
 
         bool IsEnumerable(PropertyInfo propertyInfo)
         {
             var type = propertyInfo.PropertyType;
+            return type.IsCollectionType();
             try
             {
-                return type.IsArray || type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                if (type.IsGenericParameter)
+                {
+                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                }
+                if (type.IsGenericTypeDefinition)
+                {
+                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                }
+                if (type.IsGenericParameter)
+                {
+                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                }
+                if (type.IsConstructedGenericType)
+                {
+                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                }
+
+                return type.IsArray || type is ICollection || type is IEnumerable;
             }
             catch
             {
