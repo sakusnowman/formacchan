@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using FormacchanLibrary.Models;
 using Extensions;
+using System.Linq;
 
 namespace FormacchanLibrary.Services
 {
@@ -16,45 +17,21 @@ namespace FormacchanLibrary.Services
         public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairFromProperties(object obj, string prefix = "", bool getChildlenProperties = true, string splitMark = "<=>")
         {
             CheckNull(obj, prefix);
-
             var properties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var result = new List<IFormatKeyValuePair>();
-
-            foreach (var property in properties)
-            {
-                if (IsEnumerable(property))
-                {
-                    var aa = property.GetValue(obj);
-                    SetIEnumerableProperty(obj, property, result, prefix, getChildlenProperties, splitMark);
-                }
-                else if (getChildlenProperties == false || IsValueTypeOrString(property))
-                {
-                    var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj), splitMark);
-                    result.Add(pairs);
-                }
-                else
-                {
-                    var classPrefix = prefix + property.Name + "::";
-                    result.AddRange(GetFormatKeyValuePairFromProperties(property.GetValue(obj), classPrefix));
-                }
-            }
-            return result;
+            return properties.SelectMany(property => GetKeyValuePairsFromProperty(property, obj, prefix, getChildlenProperties, splitMark));
         }
 
         public IEnumerable<XElement> GetXmlFormatKeyValuePairFromProperties(object obj, bool getChildlenProperties = true)
         {
             var keyValuePairs = GetFormatKeyValuePairFromProperties(obj, getChildlenProperties: getChildlenProperties);
+
             var result = new List<XElement>();
             foreach (var pair in keyValuePairs)
             {
-                var element = new XElement("pair",
-                    new XAttribute("key", pair.Key),
-                    new XAttribute("value", pair.Value));
-                result.Add(element);
+                result.Add(GetKeyValuePairXElement(pair));
             }
             return result;
         }
-
 
         public IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairs(string pairsSentence, string splitMark)
         {
@@ -75,20 +52,28 @@ namespace FormacchanLibrary.Services
             return result;
         }
 
+        IEnumerable<IFormatKeyValuePair> GetKeyValuePairsFromProperty(PropertyInfo property, object obj, string prefix, bool getChildlenProperties, string splitMark)
+        {
+            if (property.PropertyType.IsCollectionType())
+            {
+                return GetFormatKeyValuePairsFromCollectionProperty(obj, property, prefix, getChildlenProperties, splitMark);
+            }
+            else if (getChildlenProperties == false || property.PropertyType.IsValueTypeOrString())
+            {
+                var pairs = new FormatKeyValuePair(GetKey(property, prefix), GetValue(property, obj), splitMark);
+                return new IFormatKeyValuePair[] { pairs };
+            }
+            else
+            {
+                var classPrefix = prefix + property.Name + "::";
+                return GetFormatKeyValuePairFromProperties(property.GetValue(obj), classPrefix, getChildlenProperties, splitMark);
+            }
+        }
+
         void CheckNull(object obj, string prefix)
         {
             if (obj == null) throw new NullReferenceException("Failed to GetFormatKeyValuePairFromProperties, cause obj is null.");
             if (prefix == null) throw new NullReferenceException("Failed to GetFormatKeyValuePairFromProperties, cause prefix is null.");
-        }
-
-        bool IsValueTypeOrString(PropertyInfo property)
-        {
-            return property.PropertyType.Equals(typeof(string)) || property.PropertyType.IsValueType;
-        }
-
-        bool IsValueTypeOrString(object obj)
-        {
-            return obj.GetType().Equals(typeof(string)) || obj.GetType().IsValueType;
         }
 
         string GetKey(PropertyInfo property, string prefix)
@@ -102,70 +87,32 @@ namespace FormacchanLibrary.Services
             return valueTemp == null ? string.Empty : valueTemp.ToString();
         }
 
-        void SetIEnumerableProperty(object obj, PropertyInfo arrayProperty, List<IFormatKeyValuePair> result, string prefix, bool getChildlenProperties, string splitMark)
+        IEnumerable<IFormatKeyValuePair> GetFormatKeyValuePairsFromCollectionProperty(object obj, PropertyInfo arrayProperty, string prefix, bool getChildlenProperties, string splitMark)
         {
             int count = 0;
-            ICollection properties = (ICollection)arrayProperty.GetValue(obj);
-            //var property = arrayProperty.GetValue(obj, new object[] { count++ });
-            //while (property != null)
-            //{
-            //    if (getChildlenProperties == false || IsValueTypeOrString(property))
-            //    {
-            //        var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), property.ToString(), splitMark);
-            //        result.Add(pairs);
-            //    }
-            //    else
-            //    {
-            //        var classPrefix = prefix + arrayProperty.Name + string.Format("[{0}]", count++) + "::";
-            //        result.AddRange(GetFormatKeyValuePairFromProperties(property, classPrefix));
-            //    }
-            //    property = arrayProperty.GetValue(obj, new object[] { count++ });
-            //}
-            foreach (var property in properties)
+            var result = new List<IFormatKeyValuePair>();
+            ICollection values = (ICollection)arrayProperty.GetValue(obj);
+            foreach (var value in values)
             {
-                if (getChildlenProperties == false || IsValueTypeOrString(property))
+                if (getChildlenProperties == false || value.GetType().IsValueTypeOrString())
                 {
-                    var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), property.ToString(), splitMark);
+                    var pairs = new FormatKeyValuePair(string.Format("{{{0}{1}[{2}]}}", prefix, arrayProperty.Name, count++), value.ToString(), splitMark);
                     result.Add(pairs);
                 }
                 else
                 {
                     var classPrefix = prefix + arrayProperty.Name + string.Format("[{0}]", count++) + "::";
-                    result.AddRange(GetFormatKeyValuePairFromProperties(property, classPrefix));
+                    result.AddRange(GetFormatKeyValuePairFromProperties(value, classPrefix));
                 }
             }
+            return result;
         }
 
-
-        bool IsEnumerable(PropertyInfo propertyInfo)
+        XElement GetKeyValuePairXElement(IFormatKeyValuePair pair)
         {
-            var type = propertyInfo.PropertyType;
-            return type.IsCollectionType();
-            try
-            {
-                if (type.IsGenericParameter)
-                {
-                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
-                }
-                if (type.IsGenericTypeDefinition)
-                {
-                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
-                }
-                if (type.IsGenericParameter)
-                {
-                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
-                }
-                if (type.IsConstructedGenericType)
-                {
-                    return type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
-                }
-
-                return type.IsArray || type is ICollection || type is IEnumerable;
-            }
-            catch
-            {
-                return false;
-            }
+            return new XElement("pair",
+                    new XAttribute("key", pair.Key),
+                    new XAttribute("value", pair.Value));
         }
     }
 }
